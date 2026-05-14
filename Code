@@ -1,0 +1,38 @@
+const int sensorPin = 34;
+
+int ledPins[4] = {18,19,21,22};
+
+void setup()
+{
+  Serial.begin(115200);
+
+  for(int i=0;i<4;i++)
+  {
+    pinMode(ledPins[i], OUTPUT);
+  }
+}
+
+void loop()
+{
+  int sensorValue = analogRead(sensorPin);
+
+  int pcmValue = sensorValue / 256;
+
+  Serial.print("Sensor: ");
+  Serial.print(sensorValue);
+
+  Serial.print("  Binary: ");
+
+  for(int i=3;i>=0;i--)
+  {
+    int bitVal = bitRead(pcmValue, i);
+
+    Serial.print(bitVal);
+
+    digitalWrite(ledPins[i], bitVal);
+  }
+
+  Serial.println();
+
+  delay(200);
+}
