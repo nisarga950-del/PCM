@@ -1,0 +1,78 @@
+# Circuit Connections
+
+## LDR Sensor Connections
+
+The LDR and 10kΩ resistor form a voltage divider circuit for analog signal acquisition.
+
+| Component            | Connection |
+| -------------------- | ---------- |
+| LDR Pin 1            | ESP32 3.3V |
+| LDR Pin 2            | GPIO34     |
+| 10kΩ Resistor Side 1 | GPIO34     |
+| 10kΩ Resistor Side 2 | GND        |
+
+### Voltage Divider Configuration
+
+```text
+3.3V
+ |
+[LDR]
+ |
+ +------ GPIO34 (Analog Input)
+ |
+[10kΩ]
+ |
+GND
+```
+
+---
+
+# LED Connections
+
+The LEDs display the 4-bit PCM encoded binary output.
+
+| ESP32 GPIO Pin | Binary Bit | Connection                 |
+| -------------- | ---------- | -------------------------- |
+| GPIO18         | Bit0 (LSB) | GPIO18 → 220Ω → LED1 Anode |
+| GPIO19         | Bit1       | GPIO19 → 220Ω → LED2 Anode |
+| GPIO21         | Bit2       | GPIO21 → 220Ω → LED3 Anode |
+| GPIO22         | Bit3 (MSB) | GPIO22 → 220Ω → LED4 Anode |
+
+### LED Cathodes
+
+All LED cathodes (short legs) are connected to:
+
+```text
+GND
+```
+
+---
+
+# Complete Circuit Diagram
+
+```text
+                 3.3V
+                   |
+                  LDR
+                   |
+                   +------ GPIO34
+                   |
+                 10kΩ
+                   |
+                  GND
+
+
+GPIO18 ---220Ω--->|---GND
+GPIO19 ---220Ω--->|---GND
+GPIO21 ---220Ω--->|---GND
+GPIO22 ---220Ω--->|---GND
+```
+
+---
+
+# Notes
+
+* ESP32 operates at 3.3V logic levels.
+* GPIO34 is used as the ADC input pin.
+* 220Ω resistors protect LEDs from excessive current.
+* The 10kΩ resistor is required to form the voltage divider for proper analog sensing.
